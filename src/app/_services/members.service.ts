@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Member} from '../models/member';
 import {of, tap} from 'rxjs';
+import {Photo} from '../models/photo';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,19 @@ export class MembersService {
     return this.http.put(this.baseUrl + 'users/' + member.username, member).pipe(
       tap(() => {
         this.members.update(members => members.map(m => m.username === member.username ? member : m));
+      })
+    )
+  }
+
+  setMainPhoto(photo: Photo) {
+    return this.http.patch(this.baseUrl + `photos/${photo.id}/set-main`, {}).pipe(
+      tap(() => {
+        this.members.update(members => members.map(m => {
+          if (m.photos.includes(photo)) {
+            m.photoUrl = photo.url;
+          }
+          return m;
+        }))
       })
     )
   }

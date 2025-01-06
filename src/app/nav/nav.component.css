@@ -2,11 +2,8 @@
   cursor: pointer
 }
 
-/*input::placeholder {*/
-/*  color: #ffffff; !* Set to white or any color you prefer *!*/
-/*  opacity: 1; !* Ensure full opacity for consistency *!*/
-/*}*/
-
-/*input.form-control::placeholder {*/
-/*  color: #ffffff; !* Specifically target form-control class if needed *!*/
-/*}*/
+img {
+  max-height: 40px;
+  border: 1px solid white;
+  display: inline;
+}
