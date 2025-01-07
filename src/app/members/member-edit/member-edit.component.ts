@@ -1,5 +1,5 @@
 import {Component, HostListener, inject, OnInit, ViewChild} from '@angular/core';
-import {Member} from '../../models/member';
+import {Member} from '../../_models/member';
 import {AccountService} from '../../_services/account.service';
 import {MembersService} from '../../_services/members.service';
 import {GalleryComponent} from 'ng-gallery';
