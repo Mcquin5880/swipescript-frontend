@@ -53,12 +53,20 @@ export class MemberEditComponent implements OnInit {
   }
 
   updateMember() {
-    this.memberService.updateMember(this.editForm?.value).subscribe({
+    if (!this.member) return;
+
+    // Merge the data from the form into the existing Member object
+    const updatedMember: Member = {
+      ...this.member,
+      ...this.editForm?.value
+    };
+
+    this.memberService.updateMember(updatedMember).subscribe({
       next: _ => {
         this.toastr.success('Profile updated successfully');
         this.editForm?.reset(this.member);
       }
-    })
+    });
   }
 
   onMemberChange(event: Member) {

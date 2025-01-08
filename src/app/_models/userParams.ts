@@ -5,7 +5,7 @@ export class UserParams {
   minAge = 18;
   maxAge = 99;
   pageNumber = 1;
-  pageSize = 5;
+  pageSize = 12;
 
   constructor(user: User | null) {
     this.gender = user?.gender === 'female' ? 'male' : 'female'

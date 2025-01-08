@@ -5,9 +5,33 @@
 <div class="container mt-3">
   <div class="d-flex">
     <div class="btn-group">
-      <button class="btn btn-primary" btnRadio="liked" [(ngModel)]="predicate" (click)="loadLikes()">Members I like</button>
-      <button class="btn btn-primary" btnRadio="likedBy" [(ngModel)]="predicate" (click)="loadLikes()">Members who like me</button>
-      <button class="btn btn-primary" btnRadio="mutual" [(ngModel)]="predicate" (click)="loadLikes()">Mutual likes</button>
+      <button
+        class="btn"
+        [class.btn-outline-primary]="predicate === 'liked'"
+        [class.btn-primary]="predicate !== 'liked'"
+        btnRadio="liked"
+        [(ngModel)]="predicate"
+        (click)="loadLikes()">
+        Members I like
+      </button>
+      <button
+        class="btn"
+        [class.btn-outline-primary]="predicate === 'likedBy'"
+        [class.btn-primary]="predicate !== 'likedBy'"
+        btnRadio="likedBy"
+        [(ngModel)]="predicate"
+        (click)="loadLikes()">
+        Members who like me
+      </button>
+      <button
+        class="btn"
+        [class.btn-outline-primary]="predicate === 'mutual'"
+        [class.btn-primary]="predicate !== 'mutual'"
+        btnRadio="mutual"
+        [(ngModel)]="predicate"
+        (click)="loadLikes()">
+        Mutual likes
+      </button>
     </div>
   </div>
 </div>
@@ -19,4 +43,3 @@
     </div>
   }
 </div>
-

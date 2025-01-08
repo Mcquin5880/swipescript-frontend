@@ -12,7 +12,7 @@ import {MemberCardComponent} from '../members/member-card/member-card.component'
     FormsModule, ButtonsModule, MemberCardComponent
   ],
   templateUrl: './lists.component.html',
-  styleUrl: './lists.component.css'
+  styleUrls: ['./lists.component.css']
 })
 export class ListsComponent implements OnInit {
 
