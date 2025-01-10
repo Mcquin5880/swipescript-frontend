@@ -1,0 +1,13 @@
+<div class="mb-3 form-floating">
+  <select
+    class="form-control"
+    [formControl]="control"
+    [class.is-invalid]="control.touched && control.invalid">
+    <option value="" disabled selected>Select your {{label()}}</option>
+    <option *ngFor="let option of options()" [value]="option">{{ option }}</option>
+  </select>
+  <label>{{label()}}</label>
+  <div *ngIf="control.hasError('required')" class="invalid-feedback text-start">
+    Please select your {{label()}}
+  </div>
+</div>

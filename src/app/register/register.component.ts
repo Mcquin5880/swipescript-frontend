@@ -5,11 +5,13 @@ import {NgClass, NgIf} from '@angular/common';
 import {TextInputComponent} from '../_forms/text-input/text-input.component';
 import {DatePickerComponent} from '../_forms/date-picker/date-picker.component';
 import {Router} from '@angular/router';
+import {DropdownInputComponent} from '../_forms/dropdown-input/dropdown-input.component';
+import {USA_STATES} from '../_constants/usa-states';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, TextInputComponent, DatePickerComponent, NgClass],
+  imports: [ReactiveFormsModule, NgIf, TextInputComponent, DatePickerComponent, NgClass, DropdownInputComponent],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
@@ -21,12 +23,13 @@ export class RegisterComponent implements OnInit {
 
   cancelRegister = output<boolean>();
   registerForm: FormGroup = new FormGroup({});
-  //maxDate = new Date();
+  maxDate = new Date();
   validationErrors: string[] | undefined;
+  usaStates = USA_STATES;
 
   ngOnInit(): void {
     this.initializeForm();
-    //this.maxDate.setFullYear(this.maxDate.getFullYear())
+    this.maxDate.setFullYear(this.maxDate.getFullYear())
   }
 
   initializeForm() {
@@ -36,7 +39,7 @@ export class RegisterComponent implements OnInit {
       knownAs: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
       city: ['', Validators.required],
-      country: ['', Validators.required],
+      state: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]],
     });

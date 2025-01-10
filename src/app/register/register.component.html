@@ -24,7 +24,8 @@
 
   <app-date-picker
     [formControl]="$any(registerForm.controls['dateOfBirth'])"
-    [label]="'Date of birth'">
+    [label]="'Date of birth'"
+    [maxDate]="maxDate">
   </app-date-picker>
 
   <app-text-input
@@ -32,10 +33,11 @@
     [label]="'City'">
   </app-text-input>
 
-  <app-text-input
-    [formControl]="$any(registerForm.controls['country'])"
-    [label]="'Country'">
-  </app-text-input>
+  <app-dropdown-input
+    [formControl]="$any(registerForm.controls['state'])"
+    [label]="'State'"
+    [options]="usaStates">
+  </app-dropdown-input>
 
   <app-text-input
     [formControl]="$any(registerForm.controls['password'])"

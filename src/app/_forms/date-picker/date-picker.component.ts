@@ -1,36 +1,54 @@
-import {Component, input, Self} from '@angular/core';
-import {ControlValueAccessor, FormControl, NgControl, ReactiveFormsModule} from '@angular/forms';
-import {BsDatepickerConfig, BsDatepickerModule} from 'ngx-bootstrap/datepicker';
-import {NgIf} from '@angular/common';
+import { Component, Input, Self } from '@angular/core';
+import { ControlValueAccessor, FormsModule, NgControl } from '@angular/forms';
+import { FlatpickrDirective, provideFlatpickrDefaults } from 'angularx-flatpickr';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-date-picker',
   standalone: true,
-  imports: [BsDatepickerModule, NgIf, ReactiveFormsModule],
+  imports: [FlatpickrDirective, FormsModule, NgIf],
+  providers: [
+    provideFlatpickrDefaults({
+      altInput: true,
+      altFormat: 'F j, Y',
+      dateFormat: 'Y-m-d',
+    }),
+  ],
   templateUrl: './date-picker.component.html',
-  styleUrl: './date-picker.component.css'
 })
 export class DatePickerComponent implements ControlValueAccessor {
-  label = input<string>('');
-  maxDate = input<Date>();
-  bsConfig?: Partial<BsDatepickerConfig>;
+  @Input() label: string = '';
+  @Input() maxDate: string | Date = new Date();
+
+  dateValue: Date | string | null = null;
 
   constructor(@Self() public ngControl: NgControl) {
     this.ngControl.valueAccessor = this;
-    this.bsConfig = {
-      containerClass: 'theme-blue',
-      dateInputFormat: 'DD MMMM YYYY'
-    }
   }
 
-  writeValue(obj: any): void {}
-
-  registerOnChange(fn: any): void {}
-
-  registerOnTouched(fn: any): void {}
-
-  get control(): FormControl {
-    return this.ngControl.control as FormControl;
+  writeValue(obj: any): void {
+    this.dateValue = obj;
   }
 
+  registerOnChange(fn: any): void {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {}
+
+  onChange = (value: any) => {};
+  onTouched = () => {};
+
+  get control() {
+    return this.ngControl.control;
+  }
+
+  onDateChange(selectedDate: any) {
+    this.onChange(selectedDate);
+    this.onTouched();
+  }
 }
