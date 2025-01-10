@@ -1,6 +1,6 @@
 <!-- Photo Gallery -->
 <div class="row mb-5">
-  <h3 class="col-12">Your Photos</h3>
+  <h3 class="col-12 mt-3">Your Photos</h3>
   @for (photo of member().photos; track photo.id) {
     <div class="col-2">
       <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1">

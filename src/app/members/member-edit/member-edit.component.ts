@@ -8,7 +8,8 @@ import {FormsModule, NgForm} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {PhotoEditorComponent} from '../photo-editor/photo-editor.component';
 import {TimeagoModule} from 'ngx-timeago';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgForOf} from '@angular/common';
+import {USA_STATES} from '../../_constants/usa-states';
 
 @Component({
   selector: 'app-member-edit',
@@ -21,7 +22,8 @@ import {DatePipe} from '@angular/common';
     FormsModule,
     PhotoEditorComponent,
     TimeagoModule,
-    DatePipe
+    DatePipe,
+    NgForOf
   ],
   templateUrl: './member-edit.component.html',
   styleUrl: './member-edit.component.css'
@@ -29,6 +31,7 @@ import {DatePipe} from '@angular/common';
 export class MemberEditComponent implements OnInit {
 
   @ViewChild('editForm') editForm?: NgForm;
+
   @HostListener('window:beforeunload', ['$event']) notify($event:any) {
     if (this.editForm?.dirty) {
       $event.returnValue = true;
@@ -39,6 +42,7 @@ export class MemberEditComponent implements OnInit {
   private memberService = inject(MembersService);
   private toastr = inject(ToastrService);
   member?: Member;
+  usaStates = USA_STATES;
 
   ngOnInit(): void {
     this.loadMember();
