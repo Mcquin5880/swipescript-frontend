@@ -21,22 +21,30 @@ export class MembersService {
   userParams = signal<UserParams>(new UserParams(this.user));
   memberCache = new Map();
 
-  getMembers() {
-    const response = this.memberCache.get(Object.values(this.userParams()).join('-'));
+  getMembers(isAdmin: boolean = false) {
+    const cacheKey = isAdmin ? 'admin-users' : Object.values(this.userParams()).join('-');
+    const response = this.memberCache.get(cacheKey);
     if (response) {
       return this.setPaginatedResponse(response);
     }
 
-    let params = this.setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
-    params = params.append('minAge', this.userParams().minAge);
-    params = params.append('maxAge', this.userParams().maxAge);
-    params = params.append('gender', this.userParams().gender);
+    let params = new HttpParams();
+    if (!isAdmin) {
+      params = this.setPaginationHeaders(this.userParams().pageNumber, this.userParams().pageSize);
+      params = params.append('minAge', this.userParams().minAge);
+      params = params.append('maxAge', this.userParams().maxAge);
+      params = params.append('gender', this.userParams().gender);
+    }
 
-    return this.http.get<Member[]>(this.baseUrl + 'users', {observe: 'response', params}).subscribe({
-      next: response => {
+    const url = isAdmin ? this.baseUrl + 'admin/users' : this.baseUrl + 'users';
+    return this.http.get<Member[]>(url, { observe: 'response', params }).subscribe({
+      next: (response) => {
         this.setPaginatedResponse(response);
-        this.memberCache.set(Object.values(this.userParams()).join('-'), response);
-      }
+        this.memberCache.set(cacheKey, response);
+      },
+      error: (err) => {
+        console.error('Error fetching members:', err);
+      },
     });
   }
 
@@ -104,5 +112,9 @@ export class MembersService {
 
   resetUserParams() {
     this.userParams.set(new UserParams(this.user));
+  }
+
+  deleteMember(userId: number) {
+    return this.http.delete(this.baseUrl + `admin/users/${userId}`);
   }
 }
