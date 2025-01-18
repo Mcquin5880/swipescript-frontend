@@ -23,7 +23,10 @@
       </div>
       <div class="card-footer">
         <div class="btn-group d-flex">
-          <button class="btn btn-primary">Like</button>
+          <button class="btn btn-primary" (click)="toggleLike()">
+            <i class="fa" [ngClass]="{'fa-heart': hasLiked(), 'fa-heart-o': !hasLiked()}" style="color: red;"></i>
+            {{ hasLiked() ? 'Unlike' : 'Like' }}
+          </button>
           <button (click)="selectTab('Messages')" class="btn btn-primary">Message</button>
         </div>
       </div>

@@ -1,18 +1,19 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, computed, inject, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Member} from '../../_models/member';
 import {TabDirective, TabsetComponent, TabsModule} from 'ngx-bootstrap/tabs';
 import {GalleryItem, GalleryModule, ImageItem} from 'ng-gallery';
 import {TimeagoModule} from 'ngx-timeago';
-import {DatePipe} from '@angular/common';
+import {DatePipe, NgClass} from '@angular/common';
 import {MemberMessagesComponent} from '../member-messages/member-messages.component';
 import {Message} from '../../_models/message';
 import {MessageService} from '../../_services/message.service';
+import {LikesService} from '../../_services/likes.service';
 
 @Component({
   selector: 'app-member-detail',
   standalone: true,
-  imports: [TabsModule, GalleryModule, TimeagoModule, DatePipe, MemberMessagesComponent],
+  imports: [TabsModule, GalleryModule, TimeagoModule, DatePipe, MemberMessagesComponent, NgClass],
   templateUrl: './member-detail.component.html',
   styleUrl: './member-detail.component.css'
 })
@@ -21,11 +22,14 @@ export class MemberDetailComponent implements OnInit {
   @ViewChild('memberTabs', {static: true}) memberTabs?: TabsetComponent;
   private messageService = inject(MessageService);
   private route = inject(ActivatedRoute)
+  private likesService = inject(LikesService);
 
   member: Member = {} as Member;
   images: GalleryItem[] = [];
   activeTab?: TabDirective;
   messages: Message[] = [];
+
+  hasLiked = computed(() => this.likesService.likeIds().includes(this.member.id));
 
   ngOnInit(): void {
     this.route.data.subscribe({
@@ -41,6 +45,8 @@ export class MemberDetailComponent implements OnInit {
         params['tab'] && this.selectTab(params['tab']);
       }
     });
+
+    this.likesService.getLikeIds();
   }
 
   onTabActivated(data: TabDirective) {
@@ -63,5 +69,17 @@ export class MemberDetailComponent implements OnInit {
 
   onUpdateMessages(event: Message) {
     this.messages.push(event);
+  }
+
+  toggleLike() {
+    this.likesService.toggleLike(this.member.id).subscribe({
+      next: () => {
+        if (this.hasLiked()) {
+          this.likesService.likeIds.update(ids => ids.filter(x => x !== this.member.id));
+        } else {
+          this.likesService.likeIds.update(ids => [...ids, this.member.id]);
+        }
+      }
+    });
   }
 }
