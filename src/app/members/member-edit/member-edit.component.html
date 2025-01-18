@@ -25,7 +25,7 @@
           </div>
           <div>
             <strong>Last Active:</strong>
-            <p>{{ member.lastActive | timeago }}</p>
+            <p>{{ moment(member.lastActive).fromNow() }}</p>
           </div>
           <div>
             <strong>Member since:</strong>

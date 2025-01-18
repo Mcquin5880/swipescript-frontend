@@ -2,10 +2,10 @@ import {Component, inject, OnInit} from '@angular/core';
 import {MessageService} from '../_services/message.service';
 import {FormsModule} from '@angular/forms';
 import {ButtonRadioDirective} from 'ngx-bootstrap/buttons';
-import {TimeagoModule} from 'ngx-timeago';
 import {Message} from '../_models/message';
 import {RouterLink} from '@angular/router';
 import {PaginationComponent} from 'ngx-bootstrap/pagination';
+import moment from 'moment';
 
 @Component({
   selector: 'app-messages',
@@ -13,7 +13,6 @@ import {PaginationComponent} from 'ngx-bootstrap/pagination';
   imports: [
     FormsModule,
     ButtonRadioDirective,
-    TimeagoModule,
     RouterLink,
     PaginationComponent
   ],
@@ -70,4 +69,6 @@ export class MessagesComponent implements OnInit {
       }
     });
   }
+
+  protected readonly moment = moment;
 }

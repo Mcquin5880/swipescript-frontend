@@ -54,12 +54,12 @@
           <td>{{ message.content }}</td>
           <td>
             <div>
-              <img [src]="isOutbox ? (message.recipientPhotoUrl || './assets/user.png') :
-                  (message.senderPhotoUrl || './assets/user.png')" alt="image of user" class="rounded-circle me-2">
+              <img [src]="isOutbox ? (message.recipientPhotoUrl || './assets/user.jpeg') :
+                  (message.senderPhotoUrl || './assets/user.jpeg')" alt="image of user" class="rounded-circle me-2">
               <strong>{{ isOutbox ? message.recipientUsername : message.senderUsername }}</strong>
             </div>
           </td>
-          <td>{{ message.messageSent | timeago }}</td>
+          <td>{{ moment(message.messageSent).fromNow() }}</td>
           <td (click)="$event.stopPropagation()">
             <button (click)="deleteMessage(message.id)" class="btn btn-danger">Delete</button>
           </td>

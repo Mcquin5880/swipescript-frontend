@@ -7,9 +7,9 @@ import {TabDirective, TabsetComponent, TabsModule} from 'ngx-bootstrap/tabs';
 import {FormsModule, NgForm} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 import {PhotoEditorComponent} from '../photo-editor/photo-editor.component';
-import {TimeagoModule} from 'ngx-timeago';
 import {DatePipe, NgForOf} from '@angular/common';
 import {USA_STATES} from '../../_constants/usa-states';
+import moment from 'moment/moment';
 
 @Component({
   selector: 'app-member-edit',
@@ -21,7 +21,6 @@ import {USA_STATES} from '../../_constants/usa-states';
     TabsModule,
     FormsModule,
     PhotoEditorComponent,
-    TimeagoModule,
     DatePipe,
     NgForOf
   ],
@@ -76,4 +75,6 @@ export class MemberEditComponent implements OnInit {
   onMemberChange(event: Member) {
     this.member = event;
   }
+
+  protected readonly moment = moment;
 }
