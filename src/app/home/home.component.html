@@ -3,10 +3,16 @@
 
     @if (!registerMode) {
       <h1>Fetch Your Match!</h1>
-      <p class="lead">A few clicks, and you’re on your way to tail-wagging happiness.</p>
+      <p class="lead">A few clicks, and you're on your way to tail-wagging happiness.</p>
       <div class="text-center">
         <button (click)="registerToggle()" class="btn btn-primary btn-lg me-2">Register</button>
         <button routerLink="/about" class="btn btn-info btn-lg me-2">Learn more</button>
+      </div>
+
+      <div class="mt-4 text-muted">
+        <p class="small">
+          🐾 Try the demo! To skip registration, log in with: test1 (male) or test2 (female) with password: "password"
+        </p>
       </div>
     } @else {
       <div class="container">
